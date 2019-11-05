@@ -24,29 +24,30 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
       this.dailyTotalCookies += this.hourlySales[hourIndex];
     }
   }
-  // method to render sales by hour in <td>s
-  this.renderHourlyTotals = function (domReference) {
-    // for loop to render each hour's totals in a row of tds
+
+  // render method
+  this.render = function (domReference) {
+    var tr = document.createElement('tr');
+
+    for (var i = 0; i < this.hourlySales.length; i++) {
+      var td = document.createElement('td');
+      td.textContent = this.hourlySales[i];
+      tr.append(td);
+    }
+    var dailyTotalCookies = document.createElement('td');
+    dailyTotalCookies.textContent = `Total: ${this.dailyTotalCookies}`;
+    tr.append(dailyTotalCookies);
+
+    table.append(tr);
   }
-  this.renderDailyTotal = function (domReference) {
-    // 
-  }
+
+
+  // method to render operating hours array as <th>s:
+
+
 }
 
-
-// for reference:
-var seattleDiv = document.getElementById('seattle');
-for (var seattleLi = 0; seattleLi < OPERATINGHOURS.length; seattleLi++) {
-  var seattleHourlyLi = document.createElement('li');
-  seattleHourlyLi.textContent = `${OPERATINGHOURS[seattleLi]}: ${seattleLoc.purchasesByHour[seattleLi]} cookies`;
-  seattleDiv.append(seattleHourlyLi);
-}
-
-var SeattleTotalLi = document.createElement('li');
-SeattleTotalLi.textContent = `Total: ${seattleLoc.dailyTotalCookies} cookies`;
-seattleDiv.append(SeattleTotalLi);
-// end reference
-
+var table = document.getElementById('sales-table');
 
 
 
@@ -58,17 +59,12 @@ var dubai = new CookieStore('Dubai', 11, 38, 3.7);
 var paris = new CookieStore('Paris', 20, 38, 2.3);
 var lima = new CookieStore('Lima', 2, 16, 4.6);
 
+var currentLocations = [seattle, tokyo, dubai, paris, lima];
 
-// for each location: (ie, loop through the locations array?)
-//   loop through operatinghours array,
-//   call the randomhourlycustomers method,
-//   that random number times avgcookiespersale = total cookies per hour
-//   store all those hourlytotals in another array
-//   display the hourlytotals array, each index in a <li>
+for (var locationIndex = 0; locationIndex < currentLocations.length; locationIndex++) {
+  var currentCity = currentLocations[locationIndex];
+  currentCity.randHourlyCust();
+  currentCity.calculateHourlySales();
+  currentCity.render(table);
+}
 
-
-// to put the text in <li>s
-// 1 get a reference in the dom
-// 2 create elements we need to append to the dom
-// 3 set their contents
-// 4 add your elements to the dom
