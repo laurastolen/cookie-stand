@@ -1,9 +1,81 @@
 'use strict';
 
-// each item in operatinghours array is a string
-var operatingHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+// var operatingHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
-// each item in the locations array is an object
+// below is my revised code for the first day using object literals (only completed for seattle and tokyo):
+const OPERATINGHOURS = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+
+var seattleLoc = {
+  locName: 'Seattle',
+  minHourlyCust: 23,
+  maxHourlyCust: 65,
+  avgSale: 6.3,
+  randHourlyCust: function (min, max) {
+    min = this.minHourlyCust;
+    max = this.maxHourlyCust;
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+  },
+  purchasesByHour: [],
+  dailyTotalCookies: 0,
+};
+
+for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length; hourIndex++) {
+  seattleLoc.purchasesByHour.push(Math.ceil(seattleLoc.avgSale * seattleLoc.randHourlyCust()));
+  // console.log(seattleLoc.purchasesByHour);
+  seattleLoc.dailyTotalCookies += seattleLoc.purchasesByHour[hourIndex];
+  // console.log(`running daily total: ${seattleLoc.dailyTotalCookies}`);
+}
+
+var seattleDiv = document.getElementById('seattle');
+for (var seattleLi = 0; seattleLi < OPERATINGHOURS.length; seattleLi++) {
+  var seattleHourlyLi = document.createElement('li');
+  seattleHourlyLi.textContent = `${OPERATINGHOURS[seattleLi]}: ${seattleLoc.purchasesByHour[seattleLi]} cookies`;
+  seattleDiv.append(seattleHourlyLi);
+}
+
+var SeattleTotalLi = document.createElement('li');
+SeattleTotalLi.textContent = `Total: ${seattleLoc.dailyTotalCookies} cookies`;
+seattleDiv.append(SeattleTotalLi);
+
+var tokyoLoc = {
+  locName: 'Tokyo',
+  minHourlyCust: 3,
+  maxHourlyCust: 24,
+  avgSale: 1.2,
+  randHourlyCust: function (min, max) {
+    min = this.minHourlyCust;
+    max = this.maxHourlyCust;
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+  },
+  purchasesByHour: [],
+  dailyTotalCookies: 0,
+};
+
+for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length; hourIndex++) {
+  tokyoLoc.purchasesByHour.push(Math.ceil(tokyoLoc.avgSale * tokyoLoc.randHourlyCust()));
+  tokyoLoc.dailyTotalCookies += tokyoLoc.purchasesByHour[hourIndex];
+}
+
+var tokyoDiv = document.getElementById('tokyo');
+for (var tokyoLi = 0; tokyoLi < OPERATINGHOURS.length; tokyoLi++) {
+  var tokyoHourlyLi = document.createElement('li');
+  tokyoHourlyLi.textContent = `${OPERATINGHOURS[tokyoLi]}: ${tokyoLoc.purchasesByHour[tokyoLi]} cookies`;
+  tokyoDiv.append(tokyoHourlyLi);
+}
+
+var tokyoTotalLi = document.createElement('li');
+tokyoTotalLi.textContent = `Total: ${tokyoLoc.dailyTotalCookies} cookies`;
+tokyoDiv.append(tokyoTotalLi);
+
+
+
+
+
+
+
+
+
+/* below is my original code from during lab:
 var locations = [seattle, tokyo, dubai, paris, lima];
 
 var seattle = {
@@ -77,26 +149,27 @@ var lima = {
   totalDailyCookies: 0
 }
 
-/*
-for each location: (ie, loop through the locations array?)
-  loop through operatinghours array,
-  call the randomhourlycustomers method,
-  that random number times avgcookiespersale = total cookies per hour
-  store all those hourlytotals in another array
-  display the hourlytotals array, each index in a <li>
-*/
+
+// for each location: (ie, loop through the locations array?)
+//   loop through operatinghours array,
+//   call the randomhourlycustomers method,
+//   that random number times avgcookiespersale = total cookies per hour
+//   store all those hourlytotals in another array
+//   display the hourlytotals array, each index in a <li>
+
 for (var hour = 0; hour < operatingHours.length; hour++) {
   var hourlyTotalCookies = seattle.avgCookiesPerSale * seattle.randomHourlyCustomers();
   hourlyTotalCookies = Math.ceil(hourlyTotalCookies);
   seattle.totalCookiesPerHourArray.push(`${operatingHours[hour]}: ${hourlyTotalCookies}`);
   seattle.totalDailyCookies += hourlyTotalCookies;
 }
-/* to put the text in <li>s
-1 get a reference in the dom
-2 create elements we need to append to the dom
-3 set their contents
-4 add your elements to the dom
-*/
+
+// to put the text in <li>s
+// 1 get a reference in the dom
+// 2 create elements we need to append to the dom
+// 3 set their contents
+// 4 add your elements to the dom
+
 var seattleDiv = document.getElementById('seattle');
 for (var i = 0; i < seattle.totalCookiesPerHourArray.length; i++) {
   var hourlyLi = document.createElement('li');
@@ -196,3 +269,4 @@ for (var i = 0; i < lima.totalCookiesPerHourArray.length; i++) {
 var totalLimaCookies = document.createElement('li');
 totalLimaCookies.textContent = `Total: ${lima.totalDailyCookies}`;
 limaDiv.append(totalLimaCookies);
+*/
