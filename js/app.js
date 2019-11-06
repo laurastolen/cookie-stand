@@ -70,7 +70,7 @@ function renderHeader(domReference) {
 }
 
 // render footer with totals for each hour among all locations:
-// add a td for 'totals' box
+// add a td for first 'totals' box
 // iterate over the operatinghours array
 // for each index of hour array, sum all first indices of hourly sales arrays
 // add a td for sum of all totals, outside loop
@@ -79,32 +79,29 @@ function renderFooter(domReference) {
   var firstfooterTd = document.createElement('td');
   firstfooterTd.textContent = 'Totals';
   tableFooter.append(firstfooterTd);
-  var hourlyTotal = 0;
+  var totalCookiesAllStores = 0;
+
   for (var i = 0; i < OPERATINGHOURS.length - 1; i++) {
     var currentHourTotal = document.createElement('td');
     for (var j = 0; j < currentLocations.length; j++) {
-      i = i;
       console.log(`i is ${i}`);
       var jlocation = currentLocations[j];
       var sales = jlocation.hourlySales[i];
-
-      console.log(sales);
-      console.log(sales[i]);
-      hourlyTotal += jlocation.hourlySales[i];
-
-      currentHourTotal.textContent = hourlyTotal;
+      console.log(`sales is ${sales}`);
+      console.log(`sales[i] is ${sales[i]}`);
+      totalCookiesAllStores += jlocation.hourlySales[i];
+      currentHourTotal.textContent = totalCookiesAllStores;
     }
-    // currentHourTotal.textContent = hourlyTotal;
-
+    currentHourTotal.textContent = totalCookiesAllStores;
     tableFooter.append(currentHourTotal);
-    console.log(hourlyTotal);
+    console.log(totalCookiesAllStores);
   }
+
   var finalFooterTd = document.createElement('td');
-  finalFooterTd.textContent = `Total of Totals`;
+  finalFooterTd.textContent = `Total Cookies for all locations is ${totalCookiesAllStores}`;
   tableFooter.append(finalFooterTd);
   table.append(tableFooter);
 }
-
 
 // renders table of all locations:
 function renderTable() {
@@ -117,5 +114,4 @@ function renderTable() {
   renderHeader(table);
   renderFooter(table);
 }
-
 renderTable();
