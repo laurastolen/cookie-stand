@@ -24,7 +24,6 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
       this.dailyTotalCookies += this.hourlySales[hourIndex];
     }
   }
-
   // render method:
   this.render = function (domReference) {
     var tr = document.createElement('tr');
@@ -43,7 +42,7 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
   }
 }
 
-// this creates the dom reference:
+// this creates the dom reference to the table:
 var table = document.getElementById('sales-table');
 
 // creating new instances for each location:
@@ -53,6 +52,7 @@ var dubai = new CookieStore('Dubai', 11, 38, 3.7);
 var paris = new CookieStore('Paris', 20, 38, 2.3);
 var lima = new CookieStore('Lima', 2, 16, 4.6);
 
+// this is the main data structure of our application:
 var currentLocations = [seattle, tokyo, dubai, paris, lima];
 
 // render header:
@@ -91,7 +91,7 @@ function renderFooter(domReference) {
       hourlyCounter += sales;
       console.log(`hourlycounter is ${hourlyCounter}`)
       console.log(`sales is ${sales}`);
-      totalCookiesAllStores += jlocation.hourlySales[i];
+      totalCookiesAllStores += sales;
     }
     currentHourTotal.textContent = hourlyCounter;
     tableFooter.append(currentHourTotal);
@@ -104,7 +104,7 @@ function renderFooter(domReference) {
   table.append(tableFooter);
 }
 
-// renders table of all locations:
+// renders table of all locations which includes header, body, footer:
 function renderTable() {
   renderHeader(table);
   for (var locationIndex = 0; locationIndex < currentLocations.length; locationIndex++) {
@@ -115,4 +115,28 @@ function renderTable() {
   }
   renderFooter(table);
 }
+
 renderTable();
+
+
+
+// ****EVENTS****
+// get the element which is the form
+var form = document.getElementById('new-store-form');
+
+// add event listener which harvests info from the form and creates a new instance
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+  // console.log(event.target.storename.value);
+  // console.log(event.target.mincust.value);
+  // console.log(event.target.maxcust.value);
+  // console.log(event.target.avgsale.value);
+  var newStoreLocation = new CookieStore(event.target.storename.value, event.target.mincust.value, event.target.maxcust.value, event.target.avgsale.value)
+
+  currentLocations.push(newStoreLocation);
+
+  var table = document.getElementById('sales-table');
+  table.innerHTML = '';
+
+  renderTable();
+});
