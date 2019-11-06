@@ -24,6 +24,7 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
       this.dailyTotalCookies += this.hourlySales[hourIndex];
     }
   }
+
   // render method:
   this.render = function (domReference) {
     var tr = document.createElement('tr');
@@ -54,48 +55,67 @@ var lima = new CookieStore('Lima', 2, 16, 4.6);
 
 var currentLocations = [seattle, tokyo, dubai, paris, lima];
 
+// render header:
+function renderHeader(domReference) {
+  var tableHeader = document.createElement('tr');
+  for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length; hourIndex++) {
+    var headers = document.createElement('th');
+    headers.textContent = OPERATINGHOURS[hourIndex];
+    tableHeader.append(headers);
+  }
+  var finalHeaderCell = document.createElement('th');
+  finalHeaderCell.textContent = 'Location Total';
+  tableHeader.append(finalHeaderCell);
+  table.append(tableHeader);
+}
 
 // render footer with totals for each hour among all locations:
 // add a td for 'totals' box
 // iterate over the operatinghours array
 // for each index of hour array, sum all first indices of hourly sales arrays
 // add a td for sum of all totals, outside loop
-// function renderFooter(domReference) {
-//   var tableFooter = document.createElement('tr');
-//   var totalsTd = document.createElement('td');
-//   totalsTd.textContent = 'Totals';
-//   // tableFooter.append(totalsTd);
-//   for (var hourlyTotalIndex = 0; hourlyTotalIndex < OPERATINGHOURS.length; hourlyTotalIndex++) {
-//     var hourlyTotal = 0;
-//     var currentHourTotal = document.createElement('td');
-//     for (var storeLocation = 0; storeLocation < currentLocations.length; storeLocation++){
-//       hourlyTotal += currentLocations[storeLocation];
-//     }
-//     hourlyTotal
-//   }
-//   var totalOfLocationTotals = document.createElement('td');
-//   totalOfLocationTotals.textContent = ;
-// }
+function renderFooter(domReference) {
+  var tableFooter = document.createElement('tr');
+  var firstfooterTd = document.createElement('td');
+  firstfooterTd.textContent = 'Totals';
+  tableFooter.append(firstfooterTd);
+  var hourlyTotal = 0;
+  for (var i = 0; i < OPERATINGHOURS.length - 1; i++) {
+    var currentHourTotal = document.createElement('td');
+    for (var j = 0; j < currentLocations.length; j++) {
+      i = i;
+      console.log(`i is ${i}`);
+      var jlocation = currentLocations[j];
+      var sales = jlocation.hourlySales[i];
 
+      console.log(sales);
+      console.log(sales[i]);
+      hourlyTotal += jlocation.hourlySales[i];
 
-// render header:
-function renderHeader(domReference) {
-  var tableHeader = document.createElement('tr');
-  var hourlyHeaders = document.createElement('th');
-  for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length; hourIndex++) {
-    var headers = document.createElement('th');
-    headers.textContent = OPERATINGHOURS[hourIndex];
-    tableHeader.append(headers);
+      currentHourTotal.textContent = hourlyTotal;
+    }
+    // currentHourTotal.textContent = hourlyTotal;
+
+    tableFooter.append(currentHourTotal);
+    console.log(hourlyTotal);
   }
-  table.append(tableHeader);
+  var finalFooterTd = document.createElement('td');
+  finalFooterTd.textContent = `Total of Totals`;
+  tableFooter.append(finalFooterTd);
+  table.append(tableFooter);
 }
-renderHeader(table);
 
 
 // renders table of all locations:
-for (var locationIndex = 0; locationIndex < currentLocations.length; locationIndex++) {
-  var currentCity = currentLocations[locationIndex];
-  currentCity.randHourlyCust();
-  currentCity.calculateHourlySales();
-  currentCity.render(table);
+function renderTable() {
+  for (var locationIndex = 0; locationIndex < currentLocations.length; locationIndex++) {
+    var currentCity = currentLocations[locationIndex];
+    currentCity.randHourlyCust();
+    currentCity.calculateHourlySales();
+    currentCity.render(table);
+  }
+  renderHeader(table);
+  renderFooter(table);
 }
+
+renderTable();
