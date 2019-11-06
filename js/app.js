@@ -83,16 +83,17 @@ function renderFooter(domReference) {
 
   for (var i = 0; i < OPERATINGHOURS.length - 1; i++) {
     var currentHourTotal = document.createElement('td');
+    var hourlyCounter = 0;
     for (var j = 0; j < currentLocations.length; j++) {
       console.log(`i is ${i}`);
       var jlocation = currentLocations[j];
       var sales = jlocation.hourlySales[i];
+      hourlyCounter += sales;
+      console.log(`hourlycounter is ${hourlyCounter}`)
       console.log(`sales is ${sales}`);
-      console.log(`sales[i] is ${sales[i]}`);
       totalCookiesAllStores += jlocation.hourlySales[i];
-      currentHourTotal.textContent = totalCookiesAllStores;
     }
-    currentHourTotal.textContent = totalCookiesAllStores;
+    currentHourTotal.textContent = hourlyCounter;
     tableFooter.append(currentHourTotal);
     console.log(totalCookiesAllStores);
   }
