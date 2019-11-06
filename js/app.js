@@ -98,20 +98,20 @@ function renderFooter(domReference) {
   }
 
   var finalFooterTd = document.createElement('td');
-  finalFooterTd.textContent = `Total Cookies for all locations is ${totalCookiesAllStores}`;
+  finalFooterTd.textContent = `Daily Total All Locations: ${totalCookiesAllStores}`;
   tableFooter.append(finalFooterTd);
   table.append(tableFooter);
 }
 
 // renders table of all locations:
 function renderTable() {
+  renderHeader(table);
   for (var locationIndex = 0; locationIndex < currentLocations.length; locationIndex++) {
     var currentCity = currentLocations[locationIndex];
     currentCity.randHourlyCust();
     currentCity.calculateHourlySales();
     currentCity.render(table);
   }
-  renderHeader(table);
   renderFooter(table);
 }
 renderTable();
