@@ -18,4 +18,6 @@ input:invalid {
 
 fieldset, table {
   width: 100%;
+  margin: auto;
+  float: left;
 }
