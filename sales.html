@@ -6,24 +6,27 @@
 </head>
 
 <body>
-  <table id="sales-table"></table>
+  <div>
+    <table id="sales-table"></table>
 
-  <fieldset>
-    <form id="new-store-form" action="">
-      <label for="storename">Store Name: </label>
-      <input type="text" name="storename">
+    <fieldset>
+      <legend>Add A New Store Location</legend>
+      <form id="new-store-form" action="">
+        <label for="storename">Store Name: </label>
+        <input type="text" name="storename" required>
 
-      <label for="mincust">Minimum Hourly Customers:</label>
-      <input type="number" name="mincust" id="mincust">
+        <label for="mincust">Minimum Hourly Customers:</label>
+        <input type="number" name="mincust" id="mincust" required>
 
-      <label for="maxcust">Maximum Hourly Customers:</label>
-      <input type="number" name="maxcust" id="maxcust">
+        <label for="maxcust">Maximum Hourly Customers:</label>
+        <input type="number" name="maxcust" id="maxcust" required>
 
-      <label for="avgsale">Average Cookies Sold Per Sale:</label>
-      <input type="text" name="avgsale">
+        <label for="avgsale">Average Cookies Sold Per Sale:</label>
+        <input type="number" name="avgsale" step="0.1" required>
 
-      <button type="submit">Add Store</button>
-    </form>
+        <button type="submit">Add Store</button>
+      </form>
+  </div>
   </fieldset>
   <script src="js/app.js"></script>
 </body>
