@@ -1,9 +1,23 @@
 table {
-  border: 2px solid black;
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  empty-cells: hide;
 }
 
 td, th {
 border: 1px solid grey;
 margin: 0px;
-padding: 0px;
+padding: 4px 3px;
+text-align: center;
+}
+
+input:invalid {
+  border: 1px dashed red;
+}
+
+fieldset, table {
+  width: 100%;
+  margin: auto;
+  float: left;
 }

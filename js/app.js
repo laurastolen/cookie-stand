@@ -18,13 +18,13 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
     }
   // method to calculate cookie sales per hour, stored in an array:
   this.calculateHourlySales = function () {
+    this.hourlySales = [];
     for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length - 1; hourIndex++) {
       var customers = this.randHourlyCust();
       this.hourlySales.push(Math.ceil(this.avgSale * customers));
       this.dailyTotalCookies += this.hourlySales[hourIndex];
     }
   }
-
   // render method:
   this.render = function (domReference) {
     var tr = document.createElement('tr');
@@ -41,9 +41,10 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
     tr.append(dailyTotalCookies);
     table.append(tr);
   }
+  // put the calc hourly sales array fx here
 }
 
-// this creates the dom reference:
+// this creates the dom reference to the table:
 var table = document.getElementById('sales-table');
 
 // creating new instances for each location:
@@ -53,6 +54,7 @@ var dubai = new CookieStore('Dubai', 11, 38, 3.7);
 var paris = new CookieStore('Paris', 20, 38, 2.3);
 var lima = new CookieStore('Lima', 2, 16, 4.6);
 
+// this is the main data structure of our application:
 var currentLocations = [seattle, tokyo, dubai, paris, lima];
 
 // render header:
@@ -69,49 +71,76 @@ function renderHeader(domReference) {
   table.append(tableHeader);
 }
 
-// render footer with totals for each hour among all locations:
-// add a td for first 'totals' box
-// iterate over the operatinghours array
-// for each index of hour array, sum all first indices of hourly sales arrays
-// add a td for sum of all totals, outside loop
+// render footer:
 function renderFooter(domReference) {
   var tableFooter = document.createElement('tr');
   var firstfooterTd = document.createElement('td');
-  firstfooterTd.textContent = 'Totals';
+  firstfooterTd.textContent = 'Hourly Totals:';
   tableFooter.append(firstfooterTd);
   var totalCookiesAllStores = 0;
 
   for (var i = 0; i < OPERATINGHOURS.length - 1; i++) {
     var currentHourTotal = document.createElement('td');
+    var hourlyCounter = 0;
     for (var j = 0; j < currentLocations.length; j++) {
-      console.log(`i is ${i}`);
       var jlocation = currentLocations[j];
       var sales = jlocation.hourlySales[i];
-      console.log(`sales is ${sales}`);
-      console.log(`sales[i] is ${sales[i]}`);
-      totalCookiesAllStores += jlocation.hourlySales[i];
-      currentHourTotal.textContent = totalCookiesAllStores;
+      hourlyCounter += sales;
+      totalCookiesAllStores += sales;
     }
-    currentHourTotal.textContent = totalCookiesAllStores;
+    currentHourTotal.textContent = hourlyCounter;
     tableFooter.append(currentHourTotal);
-    console.log(totalCookiesAllStores);
   }
 
   var finalFooterTd = document.createElement('td');
-  finalFooterTd.textContent = `Total Cookies for all locations is ${totalCookiesAllStores}`;
+  finalFooterTd.textContent = `Daily Total All Locations: ${totalCookiesAllStores}`;
   tableFooter.append(finalFooterTd);
   table.append(tableFooter);
 }
 
-// renders table of all locations:
+// renders entire table of all locations which includes header, body, footer:
 function renderTable() {
+  renderHeader(table);
+  // this loop renders the body (ie, each location's row)
   for (var locationIndex = 0; locationIndex < currentLocations.length; locationIndex++) {
     var currentCity = currentLocations[locationIndex];
     currentCity.randHourlyCust();
     currentCity.calculateHourlySales();
     currentCity.render(table);
   }
-  renderHeader(table);
   renderFooter(table);
 }
+
 renderTable();
+
+
+function clearAndRender() {
+  var table = document.getElementById('sales-table');
+  table.innerHTML = "";
+
+  renderHeader();
+  //loop to render all body
+  for (var i = 0; i < currentLocations.length; i++) {
+    var currentCity = currentLocations[i];
+    currentCity.randHourlyCust();
+    currentCity.calculateHourlySales();
+    currentCity.render(table);
+  }
+  renderFooter();
+}
+
+
+
+// ****EVENTS****
+// get the element which is the form
+var form = document.getElementById('new-store-form');
+
+// add event listener which harvests info from the form and creates a new instance
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  var newStoreLocation = new CookieStore(event.target.storename.value, event.target.mincust.value, event.target.maxcust.value, event.target.avgsale.value)
+  currentLocations.push(newStoreLocation);
+
+  clearAndRender();
+});
