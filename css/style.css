@@ -1,23 +1,97 @@
+@import url('reset.css');
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap');
+
+/* colors (from coolors.co): #37515F dark slate grey, #1F0812 licorice, #E4959E parrot pink, #B98B82 old rose, #FAE3DE misty rose */
+
+body {
+  border: 15px solid #37515F;
+  padding: 10px;
+  max-width: 850px;
+  width: 90%;
+  margin: 10px auto;
+  background-color: #FAE3DE;
+  text-transform: capitalize;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+} 
+
+h1 {
+  font-family: 'Bowlby One SC', cursive;
+  font-size: 2.5em;
+  margin: 20px;
+  text-transform: uppercase;
+}
+
+#logo {
+  max-width: 300px;
+}
+
 table {
-  border: 1px solid black;
+  border: 2px solid #37515F;
   border-collapse: collapse;
-  margin-bottom: 20px;
-  empty-cells: hide;
+  font-family: Helvetica, sans-serif;
+  margin: 20px;
+}
+
+fieldset {
+  display: inline-flex;
+  align-content: space-around;
 }
 
 td, th {
-border: 1px solid grey;
+border: 2px solid #37515F;
 margin: 0px;
-padding: 4px 3px;
+padding: 10px 5px;
 text-align: center;
+vertical-align: middle;
 }
 
-input:invalid {
-  border: 1px dashed red;
+#add-location {
+  border: 1px solid #E4959E;
+  width: 30%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 15px;
 }
 
-fieldset, table {
-  width: 100%;
-  margin: auto;
-  float: left;
+input:required {
+  border: 1px dashed #B98B82;
+}
+
+button {
+  border-radius: 10px;
+  margin: 15px 10px;
+  padding: 15px;
+  background: #37515F;
+  border: 3px ridge gray;
+  cursor: pointer;
+  color: #B98B82;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #E4959E;
+  color: #1F0812
+}
+
+tr:last-child {
+  font-weight: bold;
+  border: 3px ridge #37515F;
+}
+
+td:first-child {
+  color: #37515F;
+  font-weight: bold;
+}
+
+label, input, legend {
+  margin: 10px;
+}
+
+form, legend, button {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+a {
+  text-decoration: none;
+  color: #37515F;
 }
