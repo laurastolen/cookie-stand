@@ -16,15 +16,6 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
     max = this.maxHourlyCust;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
-  // method to calculate cookie sales per hour, stored in an array:
-  this.calculateHourlySales = function () {
-    this.hourlySales = [];
-    for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length - 1; hourIndex++) {
-      var customers = this.randHourlyCust();
-      this.hourlySales.push(Math.ceil(this.avgSale * customers));
-      this.dailyTotalCookies += this.hourlySales[hourIndex];
-    }
-  };
   // render method:
   this.render = function () {
     var tr = document.createElement('tr');
@@ -41,7 +32,15 @@ function CookieStore(storeLocation, minHourlyCust, maxHourlyCust, avgSale) {
     tr.append(dailyTotalCookies);
     table.append(tr);
   };
-  // put the calc hourly sales array fx OR THE METHOD here
+  // method to calculate cookie sales per hour, stored in an array:
+  this.calculateHourlySales = function () {
+    this.hourlySales = [];
+    for (var hourIndex = 0; hourIndex < OPERATINGHOURS.length - 1; hourIndex++) {
+      var customers = this.randHourlyCust();
+      this.hourlySales.push(Math.ceil(this.avgSale * customers));
+      this.dailyTotalCookies += this.hourlySales[hourIndex];
+    }
+  };
 }
 
 // this creates the dom reference to the table:
