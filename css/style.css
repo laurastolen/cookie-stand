@@ -1,23 +1,30 @@
 @import url('reset.css');
 @import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap');
 
-/* colors (from coolors.co): #37515F dark slate grey, #1F0812 licorice, #E4959E parrot pink, #B98B82 old rose, #FAE3DE misty rose */
+/* colors (from coolors.co): #37515F dark slate grey, #23343D, #1F0812 licorice, #E4959E parrot pink, #B98B82 old rose, #FAE3DE misty rose */
+
+html {
+  background-color: #FAE3DE;
+}
 
 body {
   border: 15px solid #37515F;
   padding: 10px;
-  max-width: 850px;
   width: 90%;
   margin: 10px auto;
-  background-color: #FAE3DE;
+  background-color: #E4959E;
   text-transform: capitalize;
   font-family: Georgia, 'Times New Roman', Times, serif;
 } 
 
-li {
+nav li {
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #1F0812;
   display: inline;
+}
+
+nav {
+  align-items: center;
 }
 
 h1, h2, h3 {
@@ -46,6 +53,7 @@ table {
   border: 2px solid #37515F;
   border-collapse: collapse;
   font-family: Helvetica, sans-serif;
+  color: #23343D;
   margin: 20px;
 }
 
@@ -110,6 +118,7 @@ form, legend, button {
 
 #family {
   opacity: 50%;
+  width: 90%;
 }
 
 #text {
@@ -152,7 +161,7 @@ figure {
   font-size: 15pt;
   font-weight: bold;
   color: #1F0812;
-text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 div#photo-grid img {
@@ -164,4 +173,15 @@ div#photo-grid img {
 
 footer {
   margin: 10% 20%;
+}
+
+#location-info {
+  list-style: square;
+  text-indent: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#location-info li {
+  line-height: 1.5em;  
 }
